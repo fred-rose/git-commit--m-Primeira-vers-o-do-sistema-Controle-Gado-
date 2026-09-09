@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#173524">
+  <meta name="description" content="Controle simples do rebanho, pastos e contas da fazenda.">
+  <title>Controle Gado</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#page-content">Ir para o conteúdo</a>
+  <button id="menu-backdrop" class="menu-backdrop" aria-label="Fechar menu" tabindex="-1"></button>
+  <aside class="sidebar" id="sidebar" aria-label="Menu principal">
+    <div class="logo"><div class="logo-icon" data-icon="herd"></div><div><h1>Controle Gado</h1><span>Gestão da Fazenda</span></div><button id="menu-close" class="icon-button mobile-only" aria-label="Fechar menu" data-icon="close"></button></div>
+    <nav class="menu" aria-label="Navegação"></nav>
+    <div class="sidebar-footer"><div class="user"><div class="user-avatar" data-icon="pastures"></div><div><strong>Minha fazenda</strong><span id="data-mode">Armazenamento local</span></div></div><p>Simples no campo.<br>Organizado em cada detalhe.</p></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div class="title-group"><button class="icon-button mobile-only" id="menu-toggle" aria-label="Abrir menu" aria-controls="sidebar" aria-expanded="false" data-icon="menu"></button><div><p class="welcome">Gestão da Fazenda</p><h2 id="page-title" tabindex="-1">Dashboard</h2></div></div><div class="top-actions"><button class="primary-button" id="novaMovimentacaoBtn" data-action="new-movement"><span data-icon="plus"></span>Nova movimentação</button></div></header>
+    <div class="notice no-print" id="stale-notice" hidden><p>Os dados foram alterados em outra aba. Recarregue para continuar com as informações atuais.</p><button class="secondary-button" id="reload-data">Recarregar</button></div>
+    <div id="page-content" tabindex="-1"><p class="loading">Carregando a fazenda…</p></div>
+    <noscript><p>Ative o JavaScript para usar o controle da fazenda.</p></noscript>
+  </main>
+  <dialog class="modal" id="dialog" aria-labelledby="dialog-title"></dialog>
+  <div id="toasts" class="toasts" aria-live="polite" aria-relevant="additions"></div>
+  <input type="file" id="backup-file" accept=".json,application/json" hidden>
+  <button id="assistant-launcher" class="assistant-launcher no-print" aria-label="Abrir Assistente da Fazenda" aria-controls="assistant-panel" aria-expanded="false" disabled><span data-icon="herd"></span><span class="assistant-launcher-label">Assistente</span></button>
+  <dialog id="assistant-panel" class="assistant-panel no-print" aria-labelledby="assistant-title">
+    <header class="assistant-header"><div><h3 id="assistant-title">Assistente da Fazenda</h3><span class="assistant-mode">Modo local · somente consulta</span></div><button id="assistant-close" class="close-modal" aria-label="Fechar assistente" data-icon="close"></button></header>
+    <div class="assistant-toolbar"><p>Consultas rápidas aos dados atuais.</p><button id="assistant-clear" class="text-button" type="button">Limpar conversa</button></div>
+    <div class="assistant-body"><div id="assistant-welcome" class="assistant-welcome"><p>Consulte seu rebanho e as contas da fazenda ou tire dúvidas sobre o sistema.</p><button data-question="Quantas vacas temos?" type="button">Quantas vacas temos?</button><button data-question="Qual o saldo?" type="button">Qual o saldo?</button><button data-question="Como faço uma venda?" type="button">Como faço uma venda?</button></div><div id="assistant-log" class="assistant-log" role="log" aria-label="Conversa com o assistente" aria-live="polite" aria-relevant="additions"></div></div>
+    <p id="assistant-status" class="assistant-status" role="status" hidden></p>
+    <form id="assistant-form"><label for="assistant-input">Sua pergunta</label><div class="assistant-compose"><textarea id="assistant-input" rows="2" maxlength="500" required placeholder="Ex.: Quantos animais são do Bruno?"></textarea><button id="assistant-send" class="primary-button" type="submit">Enviar</button></div><p class="assistant-footnote">Até 20 mensagens. Conversa apenas nesta sessão.</p></form>
+  </dialog>
+</body>
+</html>

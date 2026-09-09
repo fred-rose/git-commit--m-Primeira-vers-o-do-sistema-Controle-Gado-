@@ -1,0 +1,1284 @@
+{
+  "workbookHash": "8c01e44f940ba305b9fcabfcd1110a19639d454d32bdc51ce8cf3d0249759e5c",
+  "createdAt": "2026-09-09T15:48:17.953Z",
+  "sheets": [
+    {
+      "name": "Movimentação Financeira - Varia",
+      "headerRow": 1,
+      "headers": [
+        "Data",
+        "Descrição",
+        "Operação",
+        "Valor ",
+        "Valor Total"
+      ],
+      "imported": 11,
+      "emptyRows": 988,
+      "incomeCents": 15438688,
+      "expenseCents": 9985499,
+      "originalFinalBalance": "54531.8932",
+      "balanceChecks": [
+        {
+          "row": 2,
+          "computedCents": 9198404,
+          "sourceRoundedCents": 9198404,
+          "matches": true
+        },
+        {
+          "row": 3,
+          "computedCents": 5248404,
+          "sourceRoundedCents": 5248404,
+          "matches": true
+        },
+        {
+          "row": 4,
+          "computedCents": 5223404,
+          "sourceRoundedCents": 5223404,
+          "matches": true
+        },
+        {
+          "row": 5,
+          "computedCents": -476596,
+          "sourceRoundedCents": -476596,
+          "matches": true
+        },
+        {
+          "row": 6,
+          "computedCents": -533596,
+          "sourceRoundedCents": -533596,
+          "matches": true
+        },
+        {
+          "row": 7,
+          "computedCents": -697096,
+          "sourceRoundedCents": -697096,
+          "matches": true
+        },
+        {
+          "row": 8,
+          "computedCents": -96,
+          "sourceRoundedCents": -96,
+          "matches": true
+        },
+        {
+          "row": 9,
+          "computedCents": 4243188,
+          "sourceRoundedCents": 4243188,
+          "matches": true
+        },
+        {
+          "row": 10,
+          "computedCents": 5543188,
+          "sourceRoundedCents": 5543188,
+          "matches": true
+        },
+        {
+          "row": 11,
+          "computedCents": 5458322,
+          "sourceRoundedCents": 5458322,
+          "matches": true
+        },
+        {
+          "row": 12,
+          "computedCents": 5453189,
+          "sourceRoundedCents": 5453189,
+          "matches": true
+        }
+      ],
+      "balanceCents": 5453189
+    },
+    {
+      "name": "Movimentação Financeira - Apênd",
+      "headerRow": 1,
+      "headers": [
+        "Data",
+        "Descrição",
+        "Operação",
+        "Valor ",
+        "Valor Total"
+      ],
+      "imported": 33,
+      "emptyRows": 966,
+      "incomeCents": 2218314,
+      "expenseCents": 1822922,
+      "originalFinalBalance": "3953.92",
+      "balanceChecks": [
+        {
+          "row": 2,
+          "computedCents": 226214,
+          "sourceRoundedCents": 226214,
+          "matches": true
+        },
+        {
+          "row": 3,
+          "computedCents": 214714,
+          "sourceRoundedCents": 214714,
+          "matches": true
+        },
+        {
+          "row": 4,
+          "computedCents": 203214,
+          "sourceRoundedCents": 203214,
+          "matches": true
+        },
+        {
+          "row": 5,
+          "computedCents": 173214,
+          "sourceRoundedCents": 173214,
+          "matches": true
+        },
+        {
+          "row": 6,
+          "computedCents": 163614,
+          "sourceRoundedCents": 163614,
+          "matches": true
+        },
+        {
+          "row": 7,
+          "computedCents": 153614,
+          "sourceRoundedCents": 153614,
+          "matches": true
+        },
+        {
+          "row": 8,
+          "computedCents": 79214,
+          "sourceRoundedCents": 79214,
+          "matches": true
+        },
+        {
+          "row": 9,
+          "computedCents": 159214,
+          "sourceRoundedCents": 159214,
+          "matches": true
+        },
+        {
+          "row": 10,
+          "computedCents": 659214,
+          "sourceRoundedCents": 659214,
+          "matches": true
+        },
+        {
+          "row": 11,
+          "computedCents": 647714,
+          "sourceRoundedCents": 647714,
+          "matches": true
+        },
+        {
+          "row": 12,
+          "computedCents": 177714,
+          "sourceRoundedCents": 177714,
+          "matches": true
+        },
+        {
+          "row": 13,
+          "computedCents": 168100,
+          "sourceRoundedCents": 168100,
+          "matches": true
+        },
+        {
+          "row": 14,
+          "computedCents": 418100,
+          "sourceRoundedCents": 418100,
+          "matches": true
+        },
+        {
+          "row": 15,
+          "computedCents": 918100,
+          "sourceRoundedCents": 918100,
+          "matches": true
+        },
+        {
+          "row": 16,
+          "computedCents": 756000,
+          "sourceRoundedCents": 756000,
+          "matches": true
+        },
+        {
+          "row": 17,
+          "computedCents": 744500,
+          "sourceRoundedCents": 744500,
+          "matches": true
+        },
+        {
+          "row": 18,
+          "computedCents": 676500,
+          "sourceRoundedCents": 676500,
+          "matches": true
+        },
+        {
+          "row": 19,
+          "computedCents": 623892,
+          "sourceRoundedCents": 623892,
+          "matches": true
+        },
+        {
+          "row": 20,
+          "computedCents": 616392,
+          "sourceRoundedCents": 616392,
+          "matches": true
+        },
+        {
+          "row": 21,
+          "computedCents": 604892,
+          "sourceRoundedCents": 604892,
+          "matches": true
+        },
+        {
+          "row": 22,
+          "computedCents": 766992,
+          "sourceRoundedCents": 766992,
+          "matches": true
+        },
+        {
+          "row": 23,
+          "computedCents": 721392,
+          "sourceRoundedCents": 721392,
+          "matches": true
+        },
+        {
+          "row": 24,
+          "computedCents": 646392,
+          "sourceRoundedCents": 646392,
+          "matches": true
+        },
+        {
+          "row": 25,
+          "computedCents": 564392,
+          "sourceRoundedCents": 564392,
+          "matches": true
+        },
+        {
+          "row": 26,
+          "computedCents": 1064392,
+          "sourceRoundedCents": 1064392,
+          "matches": true
+        },
+        {
+          "row": 27,
+          "computedCents": 1026892,
+          "sourceRoundedCents": 1026892,
+          "matches": true
+        },
+        {
+          "row": 28,
+          "computedCents": 966892,
+          "sourceRoundedCents": 966892,
+          "matches": true
+        },
+        {
+          "row": 29,
+          "computedCents": 561892,
+          "sourceRoundedCents": 561892,
+          "matches": true
+        },
+        {
+          "row": 30,
+          "computedCents": 487892,
+          "sourceRoundedCents": 487892,
+          "matches": true
+        },
+        {
+          "row": 31,
+          "computedCents": 476392,
+          "sourceRoundedCents": 476392,
+          "matches": true
+        },
+        {
+          "row": 32,
+          "computedCents": 446392,
+          "sourceRoundedCents": 446392,
+          "matches": true
+        },
+        {
+          "row": 33,
+          "computedCents": 409392,
+          "sourceRoundedCents": 409392,
+          "matches": true
+        },
+        {
+          "row": 34,
+          "computedCents": 395392,
+          "sourceRoundedCents": 395392,
+          "matches": true
+        }
+      ],
+      "balanceCents": 395392
+    }
+  ],
+  "precision": [
+    {
+      "sheet": "Movimentação Financeira - Varia",
+      "row": 11,
+      "original": "848.6568",
+      "normalized": "848.66",
+      "rule": "Arredondamento para o centavo mais próximo; original preservado."
+    }
+  ],
+  "duplicates": [],
+  "historicalReview": [
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 2,
+      "owner": "Bruno",
+      "date": "2021-05-21T03:00:00.000Z",
+      "description": "Venda Leilão",
+      "operation": "Saiu",
+      "animal": "Vaca",
+      "quantity": 1,
+      "amount": 4000,
+      "observation": "Vaca voltou pra Vargem",
+      "photo": null,
+      "reason": "Confirmar valor total/unitário e relação com saldo anterior de 2026."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 3,
+      "owner": "Bruno",
+      "date": "2021-05-21T03:00:00.000Z",
+      "description": "Venda Bodão",
+      "operation": "Saiu",
+      "animal": "Vaca",
+      "quantity": 1,
+      "amount": 4665,
+      "observation": null,
+      "photo": null,
+      "reason": "Confirmar valor total/unitário e relação com saldo anterior de 2026."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 4,
+      "owner": "Bruno",
+      "date": "2021-05-21T03:00:00.000Z",
+      "description": "Venda Leilão",
+      "operation": "Saiu",
+      "animal": "Vaca",
+      "quantity": 3,
+      "amount": 11616.26,
+      "observation": null,
+      "photo": null,
+      "reason": "Confirmar valor total/unitário e relação com saldo anterior de 2026."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 5,
+      "owner": "Bruno",
+      "date": "2021-05-21T03:00:00.000Z",
+      "description": "Venda Leilão",
+      "operation": "Saiu",
+      "animal": "Bezerra",
+      "quantity": 8,
+      "amount": 16856,
+      "observation": 16856,
+      "photo": null,
+      "reason": "Confirmar valor total/unitário e relação com saldo anterior de 2026."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 6,
+      "owner": "Nilda",
+      "date": "2021-05-21T03:00:00.000Z",
+      "description": "Venda Leilão",
+      "operation": "Saiu",
+      "animal": "Vaca",
+      "quantity": 1,
+      "amount": 3600,
+      "observation": "Vaca voltou pra Vargem",
+      "photo": null,
+      "reason": "Confirmar valor total/unitário e relação com saldo anterior de 2026."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 7,
+      "owner": "Nilda",
+      "date": "2021-05-21T03:00:00.000Z",
+      "description": "Venda Leilão",
+      "operation": "Saiu",
+      "animal": "Bezerra",
+      "quantity": 5,
+      "amount": 10535,
+      "observation": null,
+      "photo": null,
+      "reason": "Confirmar valor total/unitário e relação com saldo anterior de 2026."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 8,
+      "owner": "Bruno",
+      "date": "2021-06-12T03:00:00.000Z",
+      "description": "Compra boi",
+      "operation": "Entrou",
+      "animal": "Boi",
+      "quantity": 1,
+      "amount": 11080,
+      "observation": "preço do boi + frete",
+      "photo": null,
+      "reason": "Confirmar valor total/unitário e relação com saldo anterior de 2026."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 9,
+      "owner": "Bruno",
+      "date": "2021-07-03T03:00:00.000Z",
+      "description": "Venda Boi manco",
+      "operation": "Saiu",
+      "animal": "Boi",
+      "quantity": 1,
+      "amount": 3808,
+      "observation": null,
+      "photo": null,
+      "reason": "Confirmar valor total/unitário e relação com saldo anterior de 2026."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 10,
+      "owner": "Nilda",
+      "date": "2021-08-02T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerra",
+      "quantity": 2,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 11,
+      "owner": "Nilda",
+      "date": "2021-08-02T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerro",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 12,
+      "owner": "Bruno",
+      "date": "2021-08-02T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerro",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 13,
+      "owner": "Bruno",
+      "date": "2021-08-02T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerra",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 14,
+      "owner": "Nilda",
+      "date": "2021-08-30T03:00:00.000Z",
+      "description": "Morreu na cerca ",
+      "operation": "Saiu",
+      "animal": "Vaca",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 15,
+      "owner": "Nilda",
+      "date": "2021-09-11T03:00:00.000Z",
+      "description": "Morreu picada de cobra",
+      "operation": "Saiu",
+      "animal": "Vaca",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 16,
+      "owner": "Nilda",
+      "date": "2021-09-28T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerro",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 17,
+      "owner": "Nilda",
+      "date": "2021-09-28T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerra",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 18,
+      "owner": "Bruno",
+      "date": "2021-09-28T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerro",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 19,
+      "owner": "Bruno",
+      "date": "2021-11-02T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerro",
+      "quantity": 2,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 20,
+      "owner": "Nilda",
+      "date": "2021-11-02T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerra",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 21,
+      "owner": "Canarinho",
+      "date": "2021-10-20T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerra",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 22,
+      "owner": "Bruno",
+      "date": "2021-10-20T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerra",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 23,
+      "owner": "Nilda",
+      "date": "2021-11-20T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerro",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 24,
+      "owner": "Nilda",
+      "date": "2021-11-20T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerra",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 25,
+      "owner": "Bruno",
+      "date": "2021-11-20T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerra",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 26,
+      "owner": "Bruno",
+      "date": "2021-11-20T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerro",
+      "quantity": 3,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 27,
+      "owner": "Nilda",
+      "date": "2021-12-02T03:00:00.000Z",
+      "description": "Venda Leilão",
+      "operation": "Saiu",
+      "animal": "Bezerro",
+      "quantity": 8,
+      "amount": null,
+      "observation": 17600,
+      "photo": null,
+      "reason": "Valor vazio; quantia aparece em Observação. Confirmar significado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 28,
+      "owner": "Nilda",
+      "date": "2021-12-02T03:00:00.000Z",
+      "description": "Venda Leilão",
+      "operation": "Saiu",
+      "animal": "Bezerra",
+      "quantity": 4,
+      "amount": null,
+      "observation": 8000,
+      "photo": null,
+      "reason": "Valor vazio; quantia aparece em Observação. Confirmar significado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 29,
+      "owner": "Bruno",
+      "date": "2021-12-02T03:00:00.000Z",
+      "description": "Venda Leilão",
+      "operation": "Saiu",
+      "animal": "Bezerro",
+      "quantity": 6,
+      "amount": null,
+      "observation": 13200,
+      "photo": null,
+      "reason": "Valor vazio; quantia aparece em Observação. Confirmar significado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 30,
+      "owner": "Érico",
+      "date": "2021-12-02T03:00:00.000Z",
+      "description": "Venda Leilão",
+      "operation": "Saiu",
+      "animal": "Bezerro",
+      "quantity": 1,
+      "amount": null,
+      "observation": 2200,
+      "photo": null,
+      "reason": "Valor vazio; quantia aparece em Observação. Confirmar significado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 31,
+      "owner": "Nilda",
+      "date": "2022-01-23T03:00:00.000Z",
+      "description": "Veanda Leilão",
+      "operation": "Saiu",
+      "animal": "Vaca",
+      "quantity": 23,
+      "amount": 85000,
+      "observation": null,
+      "photo": null,
+      "reason": "Confirmar valor total/unitário e relação com saldo anterior de 2026."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 32,
+      "owner": "Bruno",
+      "date": "2022-01-23T03:00:00.000Z",
+      "description": "Venda Leilão",
+      "operation": "Saiu",
+      "animal": "Vaca",
+      "quantity": 18,
+      "amount": 35000,
+      "observation": null,
+      "photo": null,
+      "reason": "Confirmar valor total/unitário e relação com saldo anterior de 2026."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 33,
+      "owner": "Bruno",
+      "date": "2022-03-03T03:00:00.000Z",
+      "description": "Venda Boi",
+      "operation": "Saiu",
+      "animal": "Boi",
+      "quantity": 1,
+      "amount": 4177,
+      "observation": null,
+      "photo": null,
+      "reason": "Confirmar valor total/unitário e relação com saldo anterior de 2026."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 34,
+      "owner": "Nilda",
+      "date": null,
+      "description": "doação Silane",
+      "operation": "Saiu",
+      "animal": "Vaca",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 35,
+      "owner": "Nilda",
+      "date": null,
+      "description": "doação Silane",
+      "operation": "Saiu",
+      "animal": "Bezerra",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 36,
+      "owner": "Érico",
+      "date": null,
+      "description": "comprou Sirlene ",
+      "operation": "Entrou",
+      "animal": "Vaca",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 37,
+      "owner": "Érico",
+      "date": null,
+      "description": "comprou Sirly",
+      "operation": "Entrou",
+      "animal": "Bezerra",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 38,
+      "owner": "Nilda",
+      "date": null,
+      "description": "nascimento ",
+      "operation": "Entrou",
+      "animal": "Bezerra",
+      "quantity": 5,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 39,
+      "owner": "Nilda",
+      "date": null,
+      "description": "nascimento ",
+      "operation": "Entrou",
+      "animal": "Bezerro",
+      "quantity": 3,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 40,
+      "owner": "Bruno",
+      "date": null,
+      "description": "3 bezerras que viram vaca",
+      "operation": "Entrou",
+      "animal": "Vaca",
+      "quantity": 3,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 41,
+      "owner": "Nilda",
+      "date": null,
+      "description": "1 vaca que viru bezerra ",
+      "operation": "Entrou",
+      "animal": "Vaca",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 42,
+      "owner": "Nilda",
+      "date": "2022-04-21T03:00:00.000Z",
+      "description": "nascimento ",
+      "operation": "Entrou",
+      "animal": "Bezerro",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 43,
+      "owner": "Nilda",
+      "date": "2022-04-21T03:00:00.000Z",
+      "description": "nascimento ",
+      "operation": "Entrou",
+      "animal": "Bezerra",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 44,
+      "owner": "Canarinho",
+      "date": "2022-05-05T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerro",
+      "quantity": 1,
+      "amount": "Tem que confirmar o sexo ",
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 45,
+      "owner": "Nilda",
+      "date": "2022-05-17T03:00:00.000Z",
+      "description": "venda",
+      "operation": "Saiu",
+      "animal": "Bezerro",
+      "quantity": 2,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 46,
+      "owner": "Nilda",
+      "date": "2022-05-17T03:00:00.000Z",
+      "description": "venda",
+      "operation": "Saiu",
+      "animal": "Bezerra",
+      "quantity": 5,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 47,
+      "owner": "Bruno",
+      "date": "2022-05-17T03:00:00.000Z",
+      "description": "venda",
+      "operation": "Saiu",
+      "animal": "Bezerra",
+      "quantity": 3,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 48,
+      "owner": "Bruno",
+      "date": "2022-05-17T03:00:00.000Z",
+      "description": "venda",
+      "operation": "Saiu",
+      "animal": "Bezerro",
+      "quantity": 7,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 49,
+      "owner": "Nilda",
+      "date": "2022-07-07T03:00:00.000Z",
+      "description": "Correção do total",
+      "operation": "Entrou",
+      "animal": "Bezerra",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 50,
+      "owner": "Bruno",
+      "date": "2022-07-07T03:00:00.000Z",
+      "description": "Correção do total",
+      "operation": "Entrou",
+      "animal": "Bezerro",
+      "quantity": 2,
+      "amount": 0,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 51,
+      "owner": "Bruno",
+      "date": "2022-07-07T03:00:00.000Z",
+      "description": "Correção do total",
+      "operation": "Saiu",
+      "animal": "Bezerra",
+      "quantity": 2,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 52,
+      "owner": "Bruno",
+      "date": "2022-07-07T03:00:00.000Z",
+      "description": "Compra de um boi nelore",
+      "operation": "Entrou",
+      "animal": "Boi",
+      "quantity": 1,
+      "amount": 10200,
+      "observation": "JBE que pagou",
+      "photo": "Movimentações_Images/52.Foto.141224.jpg",
+      "reason": "Confirmar valor total/unitário e relação com saldo anterior de 2026."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 53,
+      "owner": "Érico",
+      "date": "2022-07-07T03:00:00.000Z",
+      "description": "Correção do total",
+      "operation": "Saiu",
+      "animal": "Bezerra",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 54,
+      "owner": "Nilda",
+      "date": "2022-09-07T03:00:00.000Z",
+      "description": "Venda leilão",
+      "operation": "Saiu",
+      "animal": "Bezerro",
+      "quantity": 3,
+      "amount": 1950,
+      "observation": null,
+      "photo": "Movimentações_Images/54.Foto.103633.jpg",
+      "reason": "Confirmar valor total/unitário e relação com saldo anterior de 2026."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 55,
+      "owner": "Nilda",
+      "date": "2022-09-07T03:00:00.000Z",
+      "description": "Venda leilão",
+      "operation": "Saiu",
+      "animal": "Bezerra",
+      "quantity": 4,
+      "amount": 1600,
+      "observation": null,
+      "photo": "Movimentações_Images/55.Foto.103823.jpg",
+      "reason": "Confirmar valor total/unitário e relação com saldo anterior de 2026."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 56,
+      "owner": "Bruno",
+      "date": "2022-09-07T03:00:00.000Z",
+      "description": "Venda leilão",
+      "operation": "Saiu",
+      "animal": "Bezerra",
+      "quantity": 2,
+      "amount": 1600,
+      "observation": null,
+      "photo": null,
+      "reason": "Confirmar valor total/unitário e relação com saldo anterior de 2026."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 57,
+      "owner": "Nilda",
+      "date": "2022-09-17T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerro",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": "Movimentações_Images/57.Foto.164442.jpg",
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 58,
+      "owner": "Nilda",
+      "date": "2022-09-25T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerro",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": "Movimentações_Images/58.Foto.143557.jpg",
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 59,
+      "owner": "Nilda",
+      "date": "2022-09-25T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerra",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": "Movimentações_Images/59.Foto.143631.jpg",
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 60,
+      "owner": "Bruno",
+      "date": "2022-09-25T03:00:00.000Z",
+      "description": "Nascimento",
+      "operation": "Entrou",
+      "animal": "Bezerra",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": "Movimentações_Images/60.Foto.143653.jpg",
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 61,
+      "owner": "Bruno",
+      "date": "2022-12-04T03:00:00.000Z",
+      "description": "Obito",
+      "operation": "Saiu",
+      "animal": "Vaca",
+      "quantity": 1,
+      "amount": null,
+      "observation": "Suspeia de cobra",
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 62,
+      "owner": "Nilda",
+      "date": "2022-12-04T03:00:00.000Z",
+      "description": "Correção de saldo",
+      "operation": "Entrou",
+      "animal": "Vaca",
+      "quantity": 2,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 63,
+      "owner": "Bruno",
+      "date": "2022-12-04T03:00:00.000Z",
+      "description": "Correção de saldo",
+      "operation": "Saiu",
+      "animal": "Vaca",
+      "quantity": 2,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 64,
+      "owner": "Nilda",
+      "date": "2022-12-04T03:00:00.000Z",
+      "description": "Correção de saldo",
+      "operation": "Entrou",
+      "animal": "Bezerra",
+      "quantity": 12,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 65,
+      "owner": "Nilda",
+      "date": "2022-12-04T03:00:00.000Z",
+      "description": "Correção de saldo",
+      "operation": "Entrou",
+      "animal": "Bezerro",
+      "quantity": 8,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 66,
+      "owner": "Bruno",
+      "date": "2022-12-04T03:00:00.000Z",
+      "description": "Correção de saldo",
+      "operation": "Entrou",
+      "animal": "Bezerra",
+      "quantity": 3,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 67,
+      "owner": "Bruno",
+      "date": "2022-12-04T03:00:00.000Z",
+      "description": "Correção de saldo",
+      "operation": "Entrou",
+      "animal": "Bezerro",
+      "quantity": 6,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    },
+    {
+      "sheet": "Movimentação Financeira",
+      "row": 68,
+      "owner": "Érico",
+      "date": "2022-12-04T03:00:00.000Z",
+      "description": "Correção de saldo",
+      "operation": "Entrou",
+      "animal": "Bezerro",
+      "quantity": 1,
+      "amount": null,
+      "observation": null,
+      "photo": null,
+      "reason": "Sem valor financeiro confirmado."
+    }
+  ],
+  "unusedSheets": [
+    {
+      "name": "Total Geral",
+      "reason": "Não contém um livro de lançamentos financeiros."
+    },
+    {
+      "name": "Movimentação Financeira",
+      "reason": "Revisão de significado dos valores e conciliação entre períodos pendentes."
+    },
+    {
+      "name": "Parâmetros",
+      "reason": "Parâmetros, rateios e cálculos sem data e sem operação inequívoca; risco de contar valores já registrados."
+    },
+    {
+      "name": "Calculadora",
+      "reason": "Não contém um livro de lançamentos financeiros."
+    },
+    {
+      "name": "Banco de Fotos",
+      "reason": "Não contém um livro de lançamentos financeiros."
+    },
+    {
+      "name": "Mapa Pastos",
+      "reason": "Não contém um livro de lançamentos financeiros."
+    }
+  ]
+}
