@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createRepository } from '../js/storage.js';
-import { createSeed } from '../js/seed.js';
+import { createSeed } from './fixtures/legacy.js';
 import { getStock, summarize, getFinances, validateData } from '../js/domain.js';
 import { STORAGE_KEY } from '../js/constants.js';
 import { today, toCents, csv } from '../js/utils.js';
@@ -166,7 +166,7 @@ test('quota cheia não aplica alteração nem notifica sucesso', () => {
 
 test('duas abas: gravação obsoleta bloqueada, recarga recupera estado atualizado', () => {
   const { repository: first, adapter } = setup();
-  const second = createRepository(adapter);
+  const second = createRepository(adapter, createSeed);
   second.getData();
   first.addMovement(movement());
   assert.throws(() => second.addMovement(movement()), /outra aba/);

@@ -1,5 +1,8 @@
 import { summarize, getFinances, financialTotals, orderedMovements } from '../domain.js';
 import { normalize, today } from '../utils.js';
+import { capacitySummary } from '../capacity/capacityService.js';
+import { activeAlerts } from '../capacity/alertsService.js';
+import { evolution,periodRange } from '../services/evolution.js';
 
 export const CONTEXT_LIMITS = Object.freeze({ groups: 20, recentMovements: 5, selectedNames: 4, nameLength: 100, maxBytes: 12000 });
 export const normalizeQuestion = value => normalize(value).replace(/[^a-z0-9]+/g, ' ').replace(/\s+/g, ' ').trim();
@@ -30,6 +33,12 @@ export function buildContext(data, question = '', asOf = today()) {
   };
   const recentType = /\bvendas?\b/.test(q) ? 'Venda' : /\bcompras?\b/.test(q) ? 'Compra' : null;
   if (/\b(ultim[ao]s?|recentes?|historico)\b/.test(q)) context.recentMovements = orderedMovements(data).reverse().filter(m => (!recentType || m.type === recentType) && (!categories.length || categories.includes(m.category)) && (!owners.length || owners.some(o => o.id === m.ownerId)) && (!pastures.length || pastures.some(p => [m.pastureId, m.destinationId].includes(p.id)))).slice(0, CONTEXT_LIMITS.recentMovements).map(m => ({ date: m.date, type: m.type, category: m.category, quantity: m.quantity }));
+  if(data.cloud){
+    context.scope=data.scope;context.farm=data.farm?{name:data.farm.name,controlMode:data.farm.controlMode}:null;
+    context.capacity=capacitySummary(data).slice(0,10).map(c=>({name:c.name,heads:c.heads,maxHeads:c.maxHeads,state:c.state,percentage:Math.round(c.percentage)}));
+    context.alerts={pending:activeAlerts(data).length};context.pendingSync=data.pendingSync?.length||0;
+    context.growth=evolution(data,periodRange('30',asOf)).farms.sort((a,b)=>b.change-a.change).slice(0,5).map(f=>({name:f.name,change:f.change,percentage:f.percentage}));
+  }
   if (new TextEncoder().encode(JSON.stringify(context)).byteLength > CONTEXT_LIMITS.maxBytes) throw new Error('Não foi possível preparar um contexto resumido dentro do limite.');
   return context;
 }

@@ -3,10 +3,12 @@ import { mkdir, readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import * as XLSX from '../js/vendor/xlsx.js';
+import { createSeed } from './fixtures/legacy.js';
 
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ? pathToFileURL(resolve(process.env.PLAYWRIGHT_MODULE)).href : 'playwright');
 const browser = await chromium.launch({ channel: process.env.BROWSER_CHANNEL || 'msedge', headless: true });
 const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, locale: 'pt-BR', acceptDownloads: true });
+await context.addInitScript(seed=>{if(/^https?:$/.test(location.protocol)&&!localStorage.getItem('controle-gado:v1'))localStorage.setItem('controle-gado:v1',JSON.stringify(seed));},createSeed());
 const page = await context.newPage(), errors = [], requests = [];
 page.on('pageerror', error => errors.push(error.message));
 page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
@@ -30,7 +32,10 @@ async function ask(question) {
   return page.locator('.chat-assistant').last().innerText();
 }
 async function closeChat() { await page.locator('#assistant-close').click(); await panel.waitFor({ state: 'hidden' }); }
-async function upload(buffer) { await page.locator('#backup-file').setInputFiles({ name: 'backup.json', mimeType: 'application/json', buffer: Buffer.from(buffer) }); }
+async function upload(buffer) {
+  await page.waitForFunction(()=>!document.querySelector('[data-action="import-backup"]').disabled);
+  await page.locator('#backup-file').setInputFiles({ name: 'backup.json', mimeType: 'application/json', buffer: Buffer.from(buffer) });
+}
 async function addMovement(type, category, quantity, value) {
   await page.locator('#novaMovimentacaoBtn').click();
   await modal.locator('[name="type"]').selectOption(type);

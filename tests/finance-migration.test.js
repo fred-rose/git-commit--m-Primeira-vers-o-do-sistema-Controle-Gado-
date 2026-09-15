@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createRepository } from '../js/storage.js';
-import { createSeed } from '../js/seed.js';
+import { createSeed } from './fixtures/legacy.js';
 import { FINANCIAL_SEED } from '../js/data/financial-seed.js';
 import { upgradeData } from '../js/finance.js';
 import { financialTotals, getFinances, validateData, summarize } from '../js/domain.js';
@@ -14,7 +14,7 @@ function repository(initial) {
   let raw = initial ? JSON.stringify(initial) : null;
   let writes = 0;
   const adapter = { getItem: () => raw, setItem: (_, value) => { raw = value; writes++; } };
-  return { r: createRepository(adapter), adapter, raw: () => raw, writes: () => writes };
+  return { r: createRepository(adapter, createSeed), adapter, raw: () => raw, writes: () => writes };
 }
 function legacy() {
   const data = { ...createSeed(), version: 1, finances: [{ id: 'manual-before', type: 'Despesa', category: 'Outros', date: today(), description: 'Despesa anterior', valueCents: 500 }] };

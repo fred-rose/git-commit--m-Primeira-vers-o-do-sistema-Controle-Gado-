@@ -1,3 +1,9 @@
 node_modules/
 tests/artifacts/
 *.log
+.env
+.env.local
+js/config.local.js
+tests/pg-data/
+tests/pg-test.log
+.npm-cache/

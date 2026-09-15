@@ -46,7 +46,7 @@ export function validateStructure(data) {
 }
 
 const fields = {
-  owners: ['id', 'name'], pastures: ['id', 'name', 'archived'],
+  owners: ['id', 'name'], pastures: ['id', 'name', 'archived', 'address', 'description'],
   openingStock: ['id', 'category', 'quantity', 'ownerId', 'pastureId'],
   movements: ['id', 'type', 'category', 'quantity', 'ownerId', 'pastureId', 'destinationId', 'date', 'valueCents', 'note', 'sequence', 'createdAt'],
   finances: ['id', 'date', 'type', 'category', 'description', 'valueCents', 'ownerId', 'owner', 'property', 'notes', 'source', 'movementId', 'createdAt', 'provenance'],

@@ -21,6 +21,15 @@ export class LocalRuleEngine {
     const command = /^(?:por favor )?(?:venda|vender|venderia|compre|comprar|registre|registrar|cadastre|cadastrar|crie|criar|adicione|adicionar|exclua|excluir|apague|apagar|delete|deletar|limpe|limpar|restaure|restaurar|importe|importar|altere|alterar|edite|editar|transfira|transferir|mova|salve|salvar)\b/.test(q) || /\b(quero|preciso|pode|favor)\b.*\b(vender|comprar|registrar|criar|excluir|apagar|limpar|restaurar|alterar|transferir)\b/.test(q);
     if (command) return result(readonly + stepsFor(q));
     if (how) return result(stepsFor(q));
+    if(context.scope){
+      if(/\b(capacidade|limite)\b/.test(q)){
+        const rows=(context.capacity||[]).filter(c=>c.state!=='normal');
+        return result(rows.length?rows.map(c=>`${c.name}: ${c.heads} / ${c.maxHeads} cabeças (${c.percentage}%) — ${c.state==='exceeded'?'acima da capacidade':'próximo do limite'}.`).join('\n'):'Nenhum local do contexto atual está próximo ou acima da capacidade configurada.');
+      }
+      if(/\b(offline|sincroniz|sincronizacao)\b/.test(q))return result(`${context.pendingSync} movimentações aguardando sincronização no contexto atual. Acesse Alertas para acompanhar ou tentar novamente.`);
+      if(/\b(pendencias?|alertas?)\b/.test(q))return result(`Há ${context.alerts.pending} pendências no contexto atual. Consulte a Central de Alertas.`);
+      if(/\b(cresceu|crescimento)\b/.test(q)){const f=context.growth[0];return result(f?`${f.name} teve a maior variação absoluta nos últimos 30 dias: ${f.change} cabeças. ${f.percentage===null?'Sem estoque inicial para calcular percentual.':`${f.percentage.toFixed(1)}%.`} Consulte Evolução para conferir o período e o inventário inicial.`:'Não há fazendas neste contexto.');}
+    }
     if (/\b(ontem|semana|ano|passado|passada|janeiro|fevereiro|marco|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro|20\d\d)\b/.test(q)) return result('Posso consultar o saldo atual e as entradas/despesas do mês atual. Para outros períodos, use os filtros de Financeiro ou Relatórios.');
     const monthly = /\b(mes|mensal)\b/.test(q), f = context.financial;
     const selected = context.selected;

@@ -6,11 +6,13 @@ import { openModal } from './modal.js';
 import { selectField, inputField, textareaField, dateField, options } from './ui.js';
 
 export function movementForm(repository, id) {
+  if (repository.cloud) return import('./cloudMovementForm.js').then(module => module.movementForm(repository,id));
   const data = repository.getData();
   const current = data.movements.find(m => m.id === id);
   const m = current || { type: 'Entrada', category: 'Vacas', date: today(), quantity: '', valueCents: 0 };
   const pastures = data.pastures.filter(p => !p.archived || [m.pastureId, m.destinationId].includes(p.id));
   openModal({
+    feedback:{loading:'Salvando…',success:'Movimentação salva'},
     title: id ? 'Editar movimentação' : 'Nova movimentação',
     subtitle: `Controle iniciado em ${formatDate(data.openingDate)}. Quantidades e valores serão atualizados juntos.`,
     content: `<div class="form-grid">${selectField('type', 'O que aconteceu?', MOVEMENT_TYPES, m.type)}${dateField(m.date, data.openingDate)}${selectField('category', 'Categoria', CATEGORIES, m.category)}${inputField('quantity', 'Quantidade de animais', m.quantity, 'number', 'required min="1" step="1" inputmode="numeric"')}${selectField('ownerId', 'Proprietário', data.owners, m.ownerId, 'Selecione')}${selectField('pastureId', 'Pasto / origem', pastures, m.pastureId, 'Selecione')}<div id="destination-field">${selectField('destinationId', 'Pasto de destino', pastures, m.destinationId, 'Selecione')}</div><div id="value-field">${inputField('value', 'Valor total (R$)', m.valueCents ? (m.valueCents / 100).toFixed(2) : '', 'text', 'inputmode="decimal" placeholder="Ex.: 40000,00"')}</div><p class="form-hint full-width" id="stock-hint" aria-live="polite"></p><p class="form-hint full-width" id="money-hint"></p>${textareaField('note', 'Observação (opcional)', m.note)}</div>`,
@@ -36,21 +38,21 @@ export function movementForm(repository, id) {
     submit(values) {
       const input = Object.fromEntries(values);
       input.valueCents = ['Compra', 'Venda'].includes(input.type) ? toCents(input.value) : 0;
-      if (id) repository.updateMovement(id, input); else repository.addMovement(input);
+      return id ? repository.updateMovement(id, input) : repository.addMovement(input);
     },
   });
 }
 
 export function pastureForm(repository, id) {
   const pasture = repository.getData().pastures.find(p => p.id === id);
-  openModal({ title: id ? 'Editar pasto' : 'Cadastrar pasto', content: inputField('name', 'Nome do pasto', pasture?.name, 'text', 'required maxlength="100" placeholder="Ex.: Barragem"'), submit: values => repository.savePasture(id, values.get('name')) });
+  openModal({ feedback:{loading:'Salvando…',success:'Salvo'}, title: id ? 'Editar pasto' : 'Cadastrar pasto', content: inputField('name', 'Nome do pasto', pasture?.name, 'text', 'required maxlength="100" placeholder="Ex.: Barragem"'), submit: values => repository.savePasture(id, values.get('name')) });
 }
 
 export function financeForm(repository, id) {
   const data = repository.getData();
   const f = data.finances.find(row => row.id === id) || { type: 'Despesa', date: today(), category: 'Outros' };
   if (f.source === 'migration') return viewFinance(repository, id);
-  openModal({ title: id ? 'Editar lançamento' : 'Novo lançamento financeiro', subtitle: 'Para compra ou venda de animais, use Nova movimentação.', content: `<div class="form-grid">${selectField('type', 'Tipo', ['Entrada', 'Despesa'], f.type)}${dateField(f.date)}${inputField('category', 'Categoria', f.category, 'text', 'required maxlength="100" list="finance-categories"')}<datalist id="finance-categories">${financeCategories(data).map(c => `<option value="${h(c)}"></option>`).join('')}</datalist>${inputField('value', 'Valor total (R$)', f.valueCents ? (f.valueCents / 100).toFixed(2) : '', 'text', 'required inputmode="decimal" placeholder="Ex.: 150,00"')}${selectField('ownerId', 'Proprietário (opcional)', data.owners, f.ownerId, 'Não informado', false)}${inputField('property', 'Propriedade (opcional)', f.property, 'text', 'maxlength="150"')}${textareaField('description', 'Descrição', f.description, 500)}${textareaField('notes', 'Observação (opcional)', f.notes)}</div>`, setup: form => { form.elements.description.required = true; }, submit: values => { const input = Object.fromEntries(values); input.valueCents = toCents(input.value); repository.saveFinance(id, input); } });
+  openModal({ feedback:{loading:'Salvando…',success:'Salvo'}, title: id ? 'Editar lançamento' : 'Novo lançamento financeiro', subtitle: 'Para compra ou venda de animais, use Nova movimentação.', content: `<div class="form-grid">${selectField('type', 'Tipo', ['Entrada', 'Despesa'], f.type)}${dateField(f.date)}${inputField('category', 'Categoria', f.category, 'text', 'required maxlength="100" list="finance-categories"')}<datalist id="finance-categories">${financeCategories(data).map(c => `<option value="${h(c)}"></option>`).join('')}</datalist>${inputField('value', 'Valor total (R$)', f.valueCents ? (f.valueCents / 100).toFixed(2) : '', 'text', 'required inputmode="decimal" placeholder="Ex.: 150,00"')}${selectField('ownerId', 'Proprietário (opcional)', data.owners, f.ownerId, 'Não informado', false)}${inputField('property', 'Propriedade (opcional)', f.property, 'text', 'maxlength="150"')}${textareaField('description', 'Descrição', f.description, 500)}${textareaField('notes', 'Observação (opcional)', f.notes)}</div>`, setup: form => { form.elements.description.required = true; }, submit: values => { const input = Object.fromEntries(values); input.valueCents = toCents(input.value); return repository.saveFinance(id, input); } });
 }
 
 export function viewFinance(repository, id) {
@@ -60,7 +62,7 @@ export function viewFinance(repository, id) {
   openModal({ title: 'Detalhes do lançamento', subtitle: 'Registro preservado da planilha original. O saldo atual é calculado pelas entradas e despesas.', content: `<dl class="finance-detail">${fields.map(([label, value]) => `<div><dt>${h(label)}</dt><dd>${h(value ?? 'Não informado')}</dd></div>`).join('')}</dl>`, submitLabel: 'Fechar', successMessage: '', submit() {} });
 }
 
-async function prepareImage(file) {
+export async function prepareImage(file) {
   if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) throw new Error('Escolha uma imagem JPG, PNG ou WebP.');
   if (file.size > 15 * 1024 * 1024) throw new Error('Escolha uma foto de até 15 MB.');
   const url = URL.createObjectURL(file);
@@ -85,10 +87,10 @@ async function prepareImage(file) {
 export function photoForm(repository, id) {
   const data = repository.getData();
   const p = data.photos.find(row => row.id === id) || { date: today() };
-  openModal({ title: id ? 'Editar registro fotográfico' : 'Adicionar foto', content: `<div class="form-grid">${inputField('title', 'Título', p.title, 'text', 'required maxlength="100"')}${dateField(p.date)}${selectField('pastureId', 'Pasto (opcional)', data.pastures.filter(x => !x.archived || x.id === p.pastureId), p.pastureId, 'Sem vínculo', false)}${selectField('ownerId', 'Proprietário (opcional)', data.owners, p.ownerId, 'Sem vínculo', false)}<label class="form-group full-width"><span>${id ? 'Substituir imagem (opcional)' : 'Imagem'}</span><input type="file" name="file" accept="image/jpeg,image/png,image/webp" ${id ? '' : 'required'}></label>${textareaField('description', 'Descrição (opcional)', p.description)}</div>`, submit: async values => {
+  openModal({ feedback:{loading:repository.cloud?'Enviando foto…':'Salvando foto…',success:'Foto salva'}, title: id ? 'Editar registro fotográfico' : 'Adicionar foto', content: `<div class="form-grid">${inputField('title', 'Título', p.title, 'text', 'required maxlength="100"')}${dateField(p.date)}${selectField('pastureId', 'Pasto (opcional)', data.pastures.filter(x => !x.archived || x.id === p.pastureId), p.pastureId, 'Sem vínculo', false)}${selectField('ownerId', 'Proprietário (opcional)', data.owners, p.ownerId, 'Sem vínculo', false)}<label class="form-group full-width"><span>${id ? 'Substituir imagem (opcional)' : 'Imagem'}</span><input type="file" name="file" accept="image/jpeg,image/png,image/webp" ${id ? '' : 'required'}></label>${textareaField('description', 'Descrição (opcional)', p.description)}</div>`, submit: async values => {
     const input = Object.fromEntries(values);
     input.image = input.file?.size ? await prepareImage(input.file) : p.image;
-    repository.savePhoto(id, input);
+    await repository.savePhoto(id, input);
   } });
 }
 

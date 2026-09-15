@@ -1,0 +1,11 @@
+import { capacitySummary } from './capacityService.js';
+export function activeAlerts(data) {
+  const persisted = (data.alerts || []).filter(a => a.status==='pending' && !['capacity_warning','capacity_exceeded','financial_pending'].includes(a.type));
+  const ignored = new Set((data.alerts || []).filter(a => a.status==='ignored').map(a => a.dedupKey));
+  const capacity = capacitySummary(data).filter(c => c.state!=='normal' && !ignored.has(`capacity:${c.id}`)).map(c => ({ id: data.alerts?.find(a => a.dedupKey===`capacity:${c.id}`)?.id, farmId:c.farmId, type:`capacity_${c.state}`, severity:c.state==='exceeded'?'critical':'warning', title:`${c.name}: ${c.state==='exceeded'?'capacidade excedida':'próximo do limite'}`, message:`${c.heads} / ${c.maxHeads} cabeças (${Math.round(c.percentage)}%)` }));
+  const finance = data.movements.filter(m => ['Compra','Venda'].includes(m.type) && !m.valueCents && !ignored.has(`financial:${m.id}`)).map(m => ({ id:data.alerts?.find(a => a.movementId===m.id)?.id, farmId:m.farmId, movementId:m.id, type:'financial_pending', severity:'warning', title:`${m.type} aguardando valor`, message:`${m.quantity} ${m.category.toLowerCase()} aguardando valor financeiro.` }));
+  const pending = (data.pendingSync || []).map(r => ({ id:r.id, local:true, failed:r.status==='failed', farmId:r.farmId, type:r.status==='failed' || r.projectionConflict?'sync_error':'offline_pending', severity:r.status==='failed'?'critical':'info', title:r.status==='failed'?'Falha de sincronização':'Movimentação pendente', message:r.errorMessage || `${r.payload.quantity} ${r.payload.category.toLowerCase()} aguardando sincronização.` }));
+  const missing = data.stock?.some(l => !l.pastureId && data.farms.find(f => f.id===l.farmId)?.controlMode==='pasture') ? [{ type:'data_pending',severity:'info',title:'Animais aguardando distribuição',message:'Use Transferência de pasto, com origem Estoque geral, para distribuir os animais.' }] : [];
+  const unconfirmed=(data.unconfirmed||[]).map(r=>({farmId:r.farmId,unconfirmed:true,type:'sync_error',severity:'warning',title:'Registro aguardando confirmação',message:'A conexão caiu durante o envio. Tente confirmar o mesmo registro para evitar duplicação.'}));
+  return [...unconfirmed,...pending,...capacity,...finance,...persisted,...missing];
+}

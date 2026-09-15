@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createRepository } from '../js/storage.js';
-import { createSeed } from '../js/seed.js';
+import { createSeed } from './fixtures/legacy.js';
 import { STORAGE_KEY } from '../js/constants.js';
 import { summarize, getFinances } from '../js/domain.js';
 import { createBackup, inspectBackup, backupFilename } from '../js/storage/backup.js';
@@ -15,7 +15,7 @@ function setup() {
   const memory = new Map([['outro-sistema', 'preservar']]);
   let writes = 0;
   const adapter = { getItem: key => memory.get(key) ?? null, setItem: (key, value) => { writes++; memory.set(key, value); } };
-  const repository = createRepository(adapter);
+  const repository = createRepository(adapter, createSeed);
   return { memory, adapter, repository, writes: () => writes };
 }
 const movement = overrides => ({ type: 'Venda', category: 'Vacas', quantity: 10, ownerId: 'owner-1', pastureId: 'pasture-2', destinationId: '', date: today(), valueCents: 4000000, note: 'Nota privada que não deve ir ao contexto', ...overrides });

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { mkdir, readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { createSeed } from '../js/seed.js';
+import { createSeed } from './fixtures/legacy.js';
 
 // Dependência opcional de desenvolvimento. A aplicação não precisa de Playwright.
 const playwrightModule = process.env.PLAYWRIGHT_MODULE;
@@ -93,6 +93,7 @@ try {
   await go('pastos');
   await page.locator('[data-action="delete-pasture"][data-id="pasture-1"]').click();
   await submit();
+  await dialog.locator('.form-error').waitFor({state:'visible'});
   assert.match(await dialog.locator('.form-error').innerText(), /ainda possui animais/);
   await dialog.getByRole('button', { name: 'Cancelar', exact: true }).click();
   await page.locator('[data-action="new-pasture"]').click();
@@ -202,6 +203,7 @@ try {
   await second.locator('#dialog [name="ownerId"]').selectOption('owner-1');
   await second.locator('#dialog [name="pastureId"]').selectOption('pasture-2');
   await second.locator('#dialog button[type="submit"]').click();
+  await second.locator('.form-error').waitFor({state:'visible'});
   assert.match(await second.locator('.form-error').innerText(), /outra aba/);
   await second.close();
   const corruptContext = await browser.newContext();

@@ -43,6 +43,7 @@ export function orderedMovements(data) {
 
 // O saldo é uma projeção do estoque inicial e do histórico. Nenhum módulo mantém totais próprios.
 export function getStock(data) {
+  if (data.cloud) return structuredClone(data.stock || []);
   const stock = new Map();
   function apply(lot, delta, pastureId = lot.pastureId) {
     const key = lotKey(lot.category, lot.ownerId, pastureId);
@@ -67,7 +68,7 @@ export function getFinances(data) {
   const automatic = data.movements.filter(m => ['Compra', 'Venda'].includes(m.type) && m.valueCents > 0).map(m => ({
     id: `movement-${m.id}`, movementId: m.id, type: m.type === 'Venda' ? 'Entrada' : 'Despesa', category: m.type === 'Venda' ? 'Venda de gado' : 'Compra de gado',
     date: m.date, valueCents: m.valueCents, description: `${m.type}: ${m.quantity} ${m.category.toLowerCase()} · ${nameOf(data.owners, m.ownerId)}`, ownerId: m.ownerId, owner: nameOf(data.owners, m.ownerId), pastureId: m.pastureId,
-    source: m.type === 'Venda' ? 'cattle_sale' : 'cattle_purchase', property: '', notes: m.note, createdAt: m.createdAt || null,
+    source: m.type === 'Venda' ? 'cattle_sale' : 'cattle_purchase', property: '', notes: m.note, createdAt: m.createdAt || null, ...(m.farmId ? { farmId: m.farmId } : {}),
   }));
   return [...automatic, ...data.finances].sort((a, b) => (b.date || '').localeCompare(a.date || '') || a.id.localeCompare(b.id));
 }

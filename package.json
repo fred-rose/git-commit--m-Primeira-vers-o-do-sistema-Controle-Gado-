@@ -1,16 +1,35 @@
 {
   "name": "controle-gado",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "Controle local de rebanho em JavaScript puro",
+  "description": "Controle de rebanho multifazenda com Supabase e operações offline",
   "scripts": {
     "start": "node scripts/server.js",
+    "configure": "node scripts/configure.js",
+    "build": "node scripts/build.js",
+    "test:cloud": "node tests/run-local-browser.mjs browser-cloud.mjs",
+    "test:feedback": "node tests/run-local-browser.mjs browser-feedback.mjs",
+    "test:auth": "node tests/run-local-browser.mjs browser-auth.mjs",
+    "test:browser:local": "node tests/run-local-browser.mjs",
+    "test:sql": "node scripts/test-sql.js",
     "test": "node --test tests/*.test.js",
     "test:browser": "node tests/browser.mjs",
     "test:browser:finance": "node tests/browser-finance.mjs",
     "test:browser:data": "node tests/browser-data.mjs",
-    "migrate:finances": "node scripts/migrate-finances.js"
+    "migrate:finances": "node scripts/migrate-finances.js",
+    "test:pwa": "node tests/browser-pwa.mjs"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.116.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "fake-indexeddb": "^6.2.5",
+    "playwright": "^1.63.0",
+    "supabase": "^2.117.0"
+  }
 }

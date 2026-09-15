@@ -1,0 +1,63 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { IDBFactory } from 'fake-indexeddb';
+import { createOfflineDB } from '../js/offline/db.js';
+import { createOutbox } from '../js/offline/outbox.js';
+import { createSyncManager } from '../js/offline/syncManager.js';
+import { snapshotData,projectPending } from '../js/services/farmData.js';
+import { capacityConfigurations,capacityPeriod,capacityPeriodEnd,capacityPeriodLabel,capacityStatus,previewCapacity } from '../js/capacity/capacityService.js';
+import { activeAlerts } from '../js/capacity/alertsService.js';
+import { evolution,stockAt } from '../js/services/evolution.js';
+import { validateQuickMovement } from '../js/services/quickMovement.js';
+import { buildContext } from '../js/ai/contextBuilder.js';
+import { LocalRuleEngine } from '../js/ai/localRuleEngine.js';
+import { getFinances,summarize } from '../js/domain.js';
+import { createSeed } from '../js/seed.js';
+import { createBackup,inspectBackup } from '../js/storage/backup.js';
+import { prepareImport } from '../js/migration/localMigration.js';
+import { buildWorkbook } from '../js/excel.js';
+import { today } from '../js/utils.js';
+const farm='f1',user='u1';
+function raw(){return {farms:[{id:'f1',name:'A',control_mode:'farm',opening_date:'2026-01-01',capacity_enabled:true},{id:'f2',name:'B',control_mode:'pasture',opening_date:'2026-01-01',capacity_enabled:false}],owners:[],pastures:[{id:'p2',farm_id:'f2',name:'Serra',archived:false}],opening_stock:[{id:'o1',farm_id:'f1',category:'Vacas',quantity:79,pasture_id:null,owner_id:null},{id:'o2',farm_id:'f2',category:'Vacas',quantity:200,pasture_id:'p2',owner_id:null}],herd_stock:[{farm_id:'f1',category:'Vacas',quantity:79},{farm_id:'f2',category:'Vacas',quantity:200,pasture_id:'p2'}],movements:[],finances:[],photos:[],capacity_rules:[{id:'cap1',farm_id:'f1',year:Number(today().slice(0,4)),month:Number(today().slice(5,7)),max_heads:80,warning_percentage:90,active:true}],alerts:[]};}
+const data=()=>snapshotData(raw(),{userId:user,selected:farm});
+const movement=(overrides={})=>({type:'Entrada',category:'Vacas',quantity:3,direction:1,date:today(),pastureId:'',ownerId:'',valueCents:0,note:'',...overrides});
+function queueSetup(){const db=createOfflineDB(new IDBFactory());return {db,outbox:createOutbox(db,user)};}
+test('inventário real conserva localização desconhecida; backup conserva endereços',()=>{const d=createSeed();assert.equal(summarize(d).total,169);assert.ok(d.openingStock.every(l=>l.ownerId==='owner-unassigned'&&l.pastureId==='pasture-unassigned'));assert.deepEqual(inspectBackup(JSON.stringify(createBackup(d))).data.pastures,d.pastures);assert.equal(createSeed(false).openingStock.length,0);});
+test('contextos individual e consolidado não misturam fazendas',()=>{assert.equal(summarize(data()).total,79);assert.equal(summarize(snapshotData(raw(),{userId:user})).total,279);assert.equal(data().pastures.length,0);assert.throws(()=>snapshotData(raw(),{selected:'foreign'}),/sem acesso/);});
+test('capacidade 79 + 3 = 82 avisa e permite; warning 91/100',()=>{assert.equal(capacityStatus(91,100,90).state,'warning');assert.equal(capacityStatus(100,100).state,'warning');const m=movement();assert.doesNotThrow(()=>validateQuickMovement(data(),m));assert.deepEqual(previewCapacity(data(),m).map(w=>[w.heads,w.after,w.excess]),[[79,82,2]]);});
+test('período de capacidade aceita meses inteiros positivos e preserva o padrão de 1 mês',()=>{for(const value of [1,2,3,12])assert.equal(capacityPeriod(value),value);assert.equal(capacityPeriodLabel(1),'1 mês');assert.equal(capacityPeriodLabel(2),'2 meses');for(const value of [0,-1,1.5,''])assert.throws(()=>capacityPeriod(value),/número inteiro a partir de 1/);});
+test('configurações agrupam a duração salva, calculam o fim e mantêm legado como 1 mês',()=>{assert.deepEqual(capacityPeriodEnd(2026,9,1),{year:2026,month:9});assert.deepEqual(capacityPeriodEnd(2026,9,3),{year:2026,month:11});assert.deepEqual(capacityPeriodEnd(2026,11,3),{year:2027,month:1});assert.deepEqual(capacityPeriodEnd(2026,12,2),{year:2027,month:1});const rules=[{id:'old',year:2026,month:9},{id:'a',periodId:'period',year:2026,month:11,periodStartYear:2026,periodStartMonth:11,periodMonths:3},{id:'b',periodId:'period',year:2026,month:12,periodStartYear:2026,periodStartMonth:11,periodMonths:3}];assert.deepEqual(capacityConfigurations(rules).map(r=>[r.id,r.months,r.end]),[['old',1,{year:2026,month:9}],['period',3,{year:2027,month:1}]]);});
+test('quick menos, ajuste e categoria validam sem alterar o estado',()=>{const d=data();validateQuickMovement(d,movement({type:'Morte',quantity:1}));assert.throws(()=>validateQuickMovement(d,movement({type:'Saída',quantity:80})),/insuficiente/);assert.throws(()=>validateQuickMovement(d,movement({quantity:1.5})),/inteira/);assert.throws(()=>validateQuickMovement(d,movement({pastureId:'foreign'})),/estoque geral/);assert.throws(()=>validateQuickMovement(d,movement({type:'Nascimento'})),/Bezerras/);assert.equal(summarize(d).total,79);});
+test('IndexedDB grava movimento e blob juntos, particiona por usuário',async()=>{const {db,outbox}=queueSetup();const row=await outbox.enqueue({farmId:farm,payload:movement(),blob:new Blob(['foto'],{type:'image/jpeg'})});assert.equal((await outbox.list()).length,1);assert.equal((await db.get('blobs',row.id)).blob.size,4);assert.equal((await createOutbox(db,'u2').list()).length,0);await assert.rejects(createOutbox(db,'u2').complete(row),/outra conta/);});
+test('falha de transação não cria outbox parcial',async()=>{const {db,outbox}=queueSetup(),id=crypto.randomUUID();await db.put('blobs',{id:`${user}:${id}`,userId:user,blob:new Blob(['existente'])});await assert.rejects(outbox.enqueue({farmId:farm,payload:movement(),blob:new Blob(['nova']),clientMutationId:id}));assert.equal((await outbox.list()).length,0);assert.equal((await db.get('blobs',`${user}:${id}`)).blob.size,9);});
+test('projeção pendente soma uma vez e reconhece operação já confirmada',async()=>{const {outbox}=queueSetup();const row=await outbox.enqueue({farmId:farm,payload:movement()});const pending=projectPending(data(),[row]);assert.equal(summarize(pending).total,82);assert.equal(pending.movements[0].pending,true);const committed=data();committed.stock[0].quantity=82;committed.movements.push({...movement(),clientMutationId:row.clientMutationId,farmId:farm});assert.equal(summarize(projectPending(committed,[row])).total,82);assert.equal(projectPending(data(),[{...row,status:'failed'}]).stock[0].quantity,79);});
+test('sincronização envia foto primeiro; só remove blob após confirmar RPC',async()=>{const {db,outbox}=queueSetup();const row=await outbox.enqueue({farmId:farm,payload:{...movement(),photo:{storagePath:'path'}},blob:new Blob(['photo'],{type:'image/jpeg'})});const order=[];const manager=createSyncManager({db,outbox,userId:user,online:()=>true,upload:async()=>order.push('upload'),send:async()=>{assert.ok(await db.get('blobs',row.id));order.push('rpc');},refresh:async()=>order.push('refresh')});await manager.run();manager.stop();assert.deepEqual(order,['upload','rpc','refresh']);assert.equal((await outbox.list())[0].status,'synced');assert.equal(await db.get('blobs',row.id),undefined);});
+test('conflito preserva foto e bloqueia operações posteriores da mesma fazenda',async()=>{const {db,outbox}=queueSetup();const row=await outbox.enqueue({farmId:farm,payload:{...movement(),photo:{storagePath:'path'}},blob:new Blob(['photo'])});await outbox.enqueue({farmId:farm,payload:movement()});let calls=0;const manager=createSyncManager({db,outbox,userId:user,online:()=>true,upload:async()=>{},send:async()=>{calls++;throw new Error('O estoque mudou.');},refresh:async()=>{}});await manager.run();manager.stop();assert.equal(calls,1);assert.equal((await outbox.list())[0].status,'failed');assert.equal((await outbox.list())[1].status,'pending');assert.ok(await db.get('blobs',row.id));});
+test('falha após commit permite reenviar o mesmo ID sem duplicação',async()=>{const {db,outbox}=queueSetup();const row=await outbox.enqueue({farmId:farm,payload:movement()});const received=new Set();let heads=0,fail=true;const manager=createSyncManager({db,outbox,userId:user,online:()=>true,upload:async()=>{},send:async(_,id)=>{if(!received.has(id)){received.add(id);heads+=3;}if(fail){fail=false;throw Object.assign(new Error('Conexão caiu'),{retryable:true});}},refresh:async()=>{}});await manager.run();await outbox.retry(row.id);await manager.run();manager.stop();assert.equal(heads,3);assert.equal((await outbox.list())[0].status,'synced');});
+test('venda pendente e valor informado geram um único financeiro',()=>{const d=data();d.movements=[{...movement({type:'Venda',quantity:8}),id:'m1',farmId:farm,sequence:1}];assert.equal(getFinances(d).length,0);assert.ok(activeAlerts(d).some(a=>a.type==='financial_pending'));d.movements[0].valueCents=80000;assert.equal(getFinances(d).length,1);assert.ok(!activeAlerts(d).some(a=>a.type==='financial_pending'));});
+test('movimentação criada durante sincronização é enviada sem nova reconexão',async()=>{
+  const {db,outbox}=queueSetup();await outbox.enqueue({farmId:farm,payload:movement()});
+  const sent=[];let second;
+  const manager=createSyncManager({db,outbox,userId:user,online:()=>true,upload:async()=>{},
+    send:async(_,id)=>{sent.push(id);if(sent.length===1)second=await outbox.enqueue({farmId:farm,payload:movement({quantity:2})});},refresh:async()=>{}});
+  try{
+    await manager.run();
+    const deadline=Date.now()+2000;
+    while((await outbox.list()).some(r=>r.status!=='synced')&&Date.now()<deadline)await new Promise(r=>setTimeout(r,10));
+    assert.equal(sent.length,2);assert.equal(sent[1],second.clientMutationId);
+    assert.ok((await outbox.list()).every(r=>r.status==='synced'));
+  }finally{manager.stop();}
+});
+test('conflito não agenda repetições da fazenda bloqueada e outras fazendas sincronizam',async()=>{
+  const {db,outbox}=queueSetup();const first=await outbox.enqueue({farmId:farm,payload:movement()});
+  await outbox.update(first,{status:'failed'});
+  const next=await outbox.enqueue({farmId:farm,payload:movement()});await outbox.update(next,{nextAttemptAt:1});
+  await outbox.enqueue({farmId:'f2',payload:movement()});let refreshes=0;const sent=[];
+  const manager=createSyncManager({db,outbox,userId:user,online:()=>true,upload:async()=>{},send:async f=>sent.push(f),refresh:async()=>{refreshes++;}});
+  try{await manager.run();await new Promise(r=>setTimeout(r,50));assert.deepEqual(sent,['f2']);assert.equal(refreshes,1);}
+  finally{manager.stop();}
+});
+test('evolução reconstrói categorias, transferência e consolidação sem snapshots diários',()=>{const d=snapshotData(raw(),{userId:user});d.movements=[{...movement({quantity:5,date:'2026-02-02'}),id:'m1',farmId:farm,sequence:1}];const e=evolution(d,{from:'2026-02-01',to:today()});assert.equal(e.start,279);assert.equal(e.end,284);d.modeChanges=[{id:'mode',farmId:'f2',mode:'farm',date:'2026-02-03',sequence:2}];assert.equal(stockAt(d,today()).find(l=>l.farmId==='f2').pastureId,'');});
+test('XLSX consolidado e individual identificam fazenda, preservando células numéricas',()=>{const all=buildWorkbook(snapshotData(raw(),{userId:user}),'herd');assert.equal(all.Sheets.Rebanho.E4.v,'Fazenda');assert.equal(all.Sheets.Rebanho.E5.v,'A');assert.equal(all.Sheets.Rebanho.E6.v,'B');assert.equal(all.Sheets.Rebanho.B5.t,'n');const single=buildWorkbook(data(),'herd');assert.equal(single.Sheets.Rebanho.E6,undefined);});
+test('assistente recebe apenas contexto e continua sem capacidade de escrita',()=>{const d=data(),context=buildContext(d);assert.equal(context.scope,'SINGLE_FARM');assert.equal(context.farm.name,'A');assert.ok(!JSON.stringify(context).includes('p2'));const engine=new LocalRuleEngine();assert.match(engine.answer('Adicione 10 vacas',context).text,/não realizo/);assert.match(engine.answer('Qual fazenda está perto do limite?',context).text,/79 \/ 80/);assert.match(engine.answer('Existem movimentações offline?',context).text,/0 movimentações/);});
+test('migração remapeia IDs de forma estável e preserva totais e datas reais',async()=>{const source=createSeed(),a=await prepareImport(source,'20000000-0000-0000-0000-000000000001','user'),b=await prepareImport(source,'20000000-0000-0000-0000-000000000001','user');assert.deepEqual(a,b);assert.equal(a.payload.totals.heads,169);assert.equal(a.payload.totals.income,17657002);assert.equal(a.payload.finances.length,44);assert.equal(a.payload.openingDate,'2026-05-28');assert.ok(a.payload.openingStock.every(l=>a.payload.pastures.some(p=>p.id===l.pastureId)));assert.ok(a.payload.pastures[0].address);});

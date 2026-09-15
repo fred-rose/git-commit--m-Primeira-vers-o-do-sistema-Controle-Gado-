@@ -3,7 +3,7 @@ import { mkdir, readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import * as XLSX from '../js/vendor/xlsx.js';
-import { createSeed } from '../js/seed.js';
+import { createSeed } from './fixtures/legacy.js';
 
 const modulePath = process.env.PLAYWRIGHT_MODULE;
 const { chromium } = await import(modulePath ? pathToFileURL(resolve(modulePath)).href : 'playwright');

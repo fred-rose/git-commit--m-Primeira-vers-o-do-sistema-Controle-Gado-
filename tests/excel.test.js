@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as XLSX from '../js/vendor/xlsx.js';
 import { buildWorkbook } from '../js/excel.js';
-import { createSeed } from '../js/seed.js';
+import { createSeed } from './fixtures/legacy.js';
 import { createRepository } from '../js/storage.js';
 import { today } from '../js/utils.js';
 
@@ -46,7 +46,7 @@ test('cada módulo exporta somente sua aba e respeita filtros', () => {
 
 test('exportação reflete criação, edição e exclusão; texto de usuário nunca vira fórmula', () => {
   let raw = null;
-  const r = createRepository({ getItem: () => raw, setItem: (_, value) => raw = value });
+  const r = createRepository({ getItem: () => raw, setItem: (_, value) => raw = value }, createSeed);
   r.getData();
   r.addMovement({ type: 'Venda', date: today(), category: 'Vacas', quantity: 10, valueCents: 4000000, ownerId: 'owner-1', pastureId: 'pasture-2', note: '=HYPERLINK("x")' });
   const m = r.getData().movements[0];

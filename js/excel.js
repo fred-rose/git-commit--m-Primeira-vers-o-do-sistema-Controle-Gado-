@@ -73,7 +73,17 @@ export function buildWorkbook(data, kind = 'general', filters = {}) {
   if (!['general', 'herd', 'movements', 'pastures', 'finance'].includes(kind)) throw new Error('Selecione um relatório válido para exportar.');
   // O geral sempre representa o banco completo, independentemente do filtro da tela.
   if (kind === 'general') filters = {};
-  for (const [name, target, create] of definitions) if (kind === 'general' || kind === target) XLSX.utils.book_append_sheet(workbook, create(), name);
+  for (const [name, target, create] of definitions) if (kind === 'general' || kind === target) {
+    const result=create();
+    if(data.cloud){
+      const entities=target==='herd'?filterStock(data,filters):target==='finance'?filterFinances(data,filters):target==='pastures'?data.pastures:target==='movements'?filterMovements(data,filters).filter(m=>filters.report==='trades'?['Compra','Venda'].includes(m.type):filters.report==='births'?['Nascimento','Morte'].includes(m.type):true):[];
+      const range=XLSX.utils.decode_range(result['!ref']),column=range.e.c+1;
+      result[XLSX.utils.encode_cell({r:3,c:column})]=cell('Fazenda');
+      for(let r=4;r<=range.e.r;r++)result[XLSX.utils.encode_cell({r,c:column})]=cell(data.farm?.name||data.farms.find(f=>f.id===entities[r-4]?.farmId)?.name||'Todas as fazendas');
+      range.e.c=column;result['!ref']=XLSX.utils.encode_range(range);result['!cols'].push({wch:30});result['!autofilter'].ref=XLSX.utils.encode_range({s:{r:3,c:0},e:range.e});
+    }
+    XLSX.utils.book_append_sheet(workbook,result,name);
+  }
   return workbook;
 }
 export function exportExcel(data, kind, filters = {}) {

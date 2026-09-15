@@ -19,7 +19,7 @@ import { FINANCIAL_SEED } from './data/financial-seed.js';
  * A planilha informa TOTAL = 172, mas a soma das categorias é 169.
  * O sistema usa a soma das categorias para evitar criar animais inexistentes.
  */
-export function createSeed() {
+export function createSeed(includeInventory = true) {
 
   const owners = [
     { id: 'owner-1', name: 'Bruno' },
@@ -157,13 +157,11 @@ export function createSeed() {
 
     pastures,
 
-    openingStock,
+    openingStock: includeInventory ? openingStock : [],
 
     movements: [],
 
-    finances: structuredClone(
-      FINANCIAL_SEED.records
-    ),
+    finances: includeInventory ? structuredClone(FINANCIAL_SEED.records) : [],
 
     photos: []
 
